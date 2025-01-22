@@ -1,47 +1,68 @@
 {
-  "name": "packageName",
+  "name": "svedocs",
   "version": "0.0.0",
   "description": "",
-  "repository": "unjs/packageName",
+  "repository": "svedocs/svedocs",
   "license": "MIT",
   "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.mjs"
     }
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "bin": {
+    "svedocs": "./dist/cli.mjs"
+  },
+  "module": "./dist/config.mjs",
+  "types": "./dist/config.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "unbuild",
+    "dev:play": "pnpx nodemon --watch src --ext ts,svelte --exec \"pnpm build && pnpm play\"",
     "dev": "vitest dev",
     "lint": "eslint . && prettier -c .",
     "lint:fix": "automd && eslint . --fix && prettier -w .",
     "prepack": "pnpm build",
-    "play": "jiti playground",
+    "play": "node ./dist/cli.mjs dev playground",
     "release": "pnpm test && changelogen --release && npm publish && git push --follow-tags",
     "test": "pnpm lint && pnpm test:types && vitest run --coverage",
     "test:types": "tsc --noEmit --skipLibCheck"
   },
   "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
     "@types/node": "^22.10.2",
     "@vitest/coverage-v8": "^2.1.8",
     "automd": "^0.3.12",
+    "carta-md": "^4.6.7",
     "changelogen": "^0.5.7",
+    "citty": "^0.1.6",
     "eslint": "^9.17.0",
     "eslint-config-unjs": "^0.4.2",
+    "glob": "^11.0.1",
     "jiti": "^2.4.2",
+    "knitwork": "^1.2.0",
+    "marked": "^15.0.6",
+    "marked-shiki": "^1.1.1",
     "prettier": "^3.4.2",
+    "rolldown": "1.0.0-beta.1",
+    "rollup-plugin-svelte": "^7.2.2",
+    "rou3": "^0.5.1",
+    "shiki": "^2.1.0",
     "typescript": "^5.7.2",
     "unbuild": "^3.0.1",
-    "vitest": "^2.1.8"
+    "universal-router": "^9.2.1",
+    "vitest": "^2.1.8",
+    "yaml": "^2.7.0"
   },
-  "packageManager": "pnpm@9.15.1"
+  "packageManager": "pnpm@9.15.1",
+  "dependencies": {
+    "@unocss/reset": "^65.4.2",
+    "svelte": "^5.19.1",
+    "unocss": "^65.4.2",
+    "vite": "^6.0.11"
+  }
 }

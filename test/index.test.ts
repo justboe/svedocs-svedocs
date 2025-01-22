@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {} from "../src";
+import {} from "../src/config";
 
 describe("packageName", () => {
   it.todo("pass", () => {

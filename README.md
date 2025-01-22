@@ -1,63 +1,40 @@
-# packageName
+# svedocs
 
 <!-- automd:badges color=yellow -->
 
-[![npm version](https://img.shields.io/npm/v/packageName?color=yellow)](https://npmjs.com/package/packageName)
-[![npm downloads](https://img.shields.io/npm/dm/packageName?color=yellow)](https://npm.chart.dev/packageName)
+[![npm version](https://img.shields.io/npm/v/svedocs?color=yellow)](https://npmjs.com/package/svedocs)
+[![npm downloads](https://img.shields.io/npm/dm/svedocs?color=yellow)](https://npm.chart.dev/svedocs)
 
 <!-- /automd -->
 
-This is my package description.
+documentation simplified with Svelte 
 
 ## Usage
 
-Install package:
+Scaffold your documentation template:
 
 <!-- automd:pm-install -->
 
 ```sh
-# ✨ Auto-detect
-npx nypm install packageName
-
 # npm
-npm install packageName
+npx svedocs init
 
 # yarn
-yarn add packageName
+yarn dlx svedocs init
 
 # pnpm
-pnpm install packageName
+pnpm dlx svedocs init
 
 # bun
-bun install packageName
+bunx svedocs init
 
 # deno
-deno install packageName
+deno x svedocs init
 ```
 
 <!-- /automd -->
 
-Import:
-
-<!-- automd:jsimport cjs cdn name="pkg" -->
-
-**ESM** (Node.js, Bun, Deno)
-
-```js
-import {} from "pkg";
-```
-
-**CommonJS** (Legacy Node.js)
-
-```js
-const {} = require("pkg");
-```
-
-**CDN** (Deno, Bun and Browsers)
-
-```js
-import {} from "https://esm.sh/pkg";
-```
+Learn more about svedocs in the [documentation](https://svedocs.dev).
 
 <!-- /automd -->
 
