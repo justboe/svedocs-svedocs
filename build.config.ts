@@ -6,7 +6,14 @@ const pkg = JSON.parse(readFileSync("./package.json", "utf-8"));
 
 export default defineBuildConfig({
   entries: ["src/entry.ts", "src/cli.ts", "src/config.ts"],
-  externals: [...Object.keys(pkg.dependencies), "$routes", "virtual:uno.css"],
+  externals: [
+    ...Object.keys(pkg.dependencies),
+    "$routes",
+    "virtual:uno.css",
+    "@sveltejs/vite-plugin-svelte",
+    "svelte",
+    "marked",
+  ],
   declaration: true,
   failOnWarn: false,
   rollup: {

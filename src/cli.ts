@@ -1,15 +1,8 @@
 import { defineCommand, createMain } from "citty";
 import { readFileSync } from "node:fs";
-import {
-  isAbsolute,
-  join,
-  relative,
-  resolve,
-  toNamespacedPath,
-} from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { isAbsolute, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { createServer, searchForWorkspaceRoot, type Plugin } from "vite";
-import { type RouterContext, findRoute, addRoute, createRouter } from "rou3";
 import { globSync } from "glob";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import unocss from "unocss/vite";
@@ -20,9 +13,11 @@ import {
 } from "unocss";
 import { Marked } from "marked";
 import shiki from "marked-shiki";
-import { createHighlighter } from "shiki";
+import { createHighlighterCore, type LanguageInput } from "shiki/core";
+import github_dark from "@shikijs/themes/github-dark";
+import github_light from "@shikijs/themes/github-light";
+import { createOnigurumaEngine } from "shiki/engine-oniguruma.mjs";
 import yaml from "yaml";
-import { genExport } from "knitwork";
 
 const pkg = JSON.parse(readFileSync("./package.json", "utf-8"));
 const SOURCE_DIR = join(fileURLToPath(import.meta.url), "../");
@@ -94,22 +89,6 @@ const main = createMain({
 
 async function svedocs(cwd = process.cwd()) {
   const routes = await resolveRoutes({ cwd });
-  const marked = new Marked();
-  const highlighter = await createHighlighter({
-    langs: ["ts", "js", "svelte"],
-    themes: ["github-light"],
-  });
-
-  marked.use(
-    shiki({
-      highlight(code, lang, props) {
-        return highlighter.codeToHtml(code, {
-          lang,
-          theme: "github-light",
-        });
-      },
-    }),
-  );
 
   return {
     name: "vite-plugin-nixt",
@@ -131,6 +110,34 @@ async function svedocs(cwd = process.cwd()) {
 
       // Markdown
       if (id.endsWith(".md")) {
+        const marked = new Marked();
+
+        if (code.includes("```")) {
+          const langs: LanguageInput[] = [];
+
+          const matches = /```[\w]+/g.exec(code) || [];
+          for (const match of matches) {
+            langs.push(import(`@shikijs/langs/${match.slice(3)}`));
+          }
+
+          const highlighter = await createHighlighterCore({
+            langs,
+            themes: [github_dark, github_light],
+            engine: createOnigurumaEngine(import("shiki/wasm")),
+          });
+
+          marked.use(
+            shiki({
+              highlight(code, lang, props) {
+                return highlighter.codeToHtml(code, {
+                  lang,
+                  theme: "github-light",
+                });
+              },
+            }),
+          );
+        }
+
         let frontmatter: any = "";
 
         marked.use({

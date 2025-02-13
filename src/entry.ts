@@ -4,6 +4,7 @@ import "@unocss/reset/tailwind.css";
 import "virtual:uno.css";
 import App from "./app.svelte";
 import { Router } from "./router";
+import DefaultLayout from "./layout.svelte";
 
 const target = document.querySelector("#app");
 const context = new Map();
@@ -31,6 +32,7 @@ async function startApp() {
     target,
     props: {
       markdown: await findRoute(),
+      Layout: DefaultLayout,
     },
   });
 }

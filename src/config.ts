@@ -1,7 +1,18 @@
-import type { UserConfig as _ViteUserConfig } from "vite";
+import type { UserConfig as ViteConfig } from "vite";
+import { type Options as SvelteConfig } from "@sveltejs/vite-plugin-svelte";
+import { type MarkedOptions } from "marked";
+
+export type Theme = {};
 
 export type UserConfig = {
-  vite: _ViteUserConfig;
+  vite?: ViteConfig;
+  svelte?: SvelteConfig;
+  marked?: MarkedOptions;
+  theme?: Theme;
+  site?: {
+    title?: string;
+    description?: string;
+  };
 };
 
-export const defineConfig = (config: UserConfig) => config;
+export const defineConfig = (config?: UserConfig) => config;

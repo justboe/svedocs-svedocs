@@ -9,8 +9,6 @@
   const { markdown, Layout }: Props = $props();
 </script>
 
-{JSON.stringify(markdown)}
-
 {#if Layout}
   <Layout>
     {@render md()}
